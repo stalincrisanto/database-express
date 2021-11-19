@@ -1,30 +1,53 @@
+const { response } = require('express');
 const express = require('express');
 const router = express.Router();
 const db = require('../database/connection');
 
-router.get('/exercise-one', (req,res) => {
-    db.any("SELECT * FROM cd_facilities")
+router.get('/exercise-one', async (req,res) => {
+    try {
+        let data = await db.any('SELECT * FROM cd_facilities');
+        res.status(200).json(data);
+    } catch (error) {
+        res.send('Error en la petición');
+    }
+    /**db.any("SELECT * FROM cd_facilities")
         .then(data => {
             res.status(200).json(data);
         })
         .catch(err => {
             console.log(err);
-        })
+        })**/
 });
 
-router.get('/exercise-two', (req,res) => {
-    db.any("SELECT name, membercost FROM cd_facilities")
+router.get('/exercise-two', async (req,res) => {
+    try {
+        let data = await db.any('SELECT name, membercost FROM cd_facilities');
+        res.status(200).json(data);
+    } catch (error) {
+        res.send('Error en la petición');
+    }
+    /**db.any("SELECT name, membercost FROM cd_facilities")
         .then(data => {
             res.status(200).json(data);
         })
         .catch(err => {
             console.log(err);
-        })
+        })**/
 });
 
-router.get('/exercise-three/:value', (req,res) => {
+router.get('/exercise-three/:value', async (req,res) => {
     const value = parseInt(req.params.value);
-    db.any("SELECT * FROM cd_facilities WHERE membercost > $1",value)
+    try {
+        let data = await db.any('SELECT * FROM cd_facilities WHERE membercost > $1',value);
+        if(data.length > 0){
+            res.status(200).json(data);
+        } else {
+            res.send('No se han encontrado resultados, ingrese otro parámetro')
+        }
+    } catch (error) {
+        console.log(error);
+    }
+    /**db.any("SELECT * FROM cd_facilities WHERE membercost > $1",value)
         .then(data => {
             if(data.length>0){
                 res.status(200).json(data);
@@ -35,7 +58,7 @@ router.get('/exercise-three/:value', (req,res) => {
         })
         .catch(err => {
             console.log(err);
-        })
+        })**/
 });
 
 router.get('/exercise-four/:value', (req,res) => {
