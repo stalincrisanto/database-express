@@ -23,4 +23,29 @@ router.post('/new-facility', async(req, res) => {
     }
 })
 
+router.put('/update-facility/:value', async (req, res) => {
+    const value = parseInt(req.params.value);
+    const name = req.body.name;
+    const {membercost, guestcost, initialoutlay, monthlymaintenance} = req.body;
+
+    try {
+        await db('cd_facilities')
+              .where({facid:value})
+              .update({name,membercost,guestcost,initialoutlay,monthlymaintenance})
+        return res.status(201).json({message:'Se modificó correctamente'})
+    } catch (err) {
+        return res.status(500).json({message:'Se produjo un error en la eliminación'})
+    }
+})
+
+router.delete('/delete-facility/:value', async (req, res) => {
+    const value = parseInt(req.params.value);
+    try {
+        await db('cd_facilities').where('facid', value).del();
+        return res.status(201).json({message:'Se elimino correctamente la instalación con id: '+value})
+    } catch (err) {
+        return res.status(500).json({message:'Se produjo un error en la eliminación'})
+    }
+})
+
 module.exports = router;
