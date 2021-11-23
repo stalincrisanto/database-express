@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
+    "knex": "^0.95.14",
     "pg-promise": "^10.11.1"
   }
 }

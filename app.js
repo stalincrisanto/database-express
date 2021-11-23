@@ -1,8 +1,8 @@
 const db = require('./database/connection');
 const exercises = require('./routes/exercises');
-const members = require('./routes/members');
-const facilities = require ('./routes/facilities');
-const bookings = require ('./routes/bookings');
+const members = require('./routes/members-qb');
+const facilities = require ('./routes/facilities-qb');
+const bookings = require ('./routes/bookings-qb');
 const express = require('express');
 const app = express();
 const port = 3000;
