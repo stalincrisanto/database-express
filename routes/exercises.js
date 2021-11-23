@@ -94,44 +94,4 @@ router.get('/exercise-nine/:value', async(req,res) => {
     }
 });
 
-router.post('/new-member', async(req, res) => {
-    const {surname, firstname, address, telephone, joindate} = req.body;
-    const zipcode = parseInt(req.body.zipcode);
-    const recommendedby = parseInt(req.body.recommendedby);
-
-    try {
-        const result = await db.none(`INSERT INTO cd_members (surname, firstname,address,zipcode,telephone, recommendedby,joindate)
-                                      VALUES ($1,$2,$3,$4,$5,$6,$7)`,[surname, firstname, address, zipcode, telephone, recommendedby, joindate]);
-        return res.status(201).json({message:'Se agregó correctamente'})
-    } catch (err) {
-        return res.status(500).json({message:'Se produjo un error'})
-    }
-})
-
-router.post('/new-facilities', async(req, res) => {
-    const name = req.body.name;
-    const {membercost, guestcost, initialoutlay, monthlymaintenance} = req.body;
-
-    try {
-        const result = await db.none(`INSERT INTO cd_facilities (name, membercost, guestcost, initialoutlay, monthlymaintenance)
-                                      VALUES ($1,$2,$3,$4,$5)`,[name, membercost,  guestcost,  initialoutlay,  monthlymaintenance]);
-        return res.status(201).json({message:'Se agregó correctamente'})
-    } catch (err) {
-        return res.status(500).json({message:'Se produjo un error'})
-    }
-})
-
-router.post('/new-booking', async(req, res) => {
-    const starttime = req.body.starttime;
-    const {memid, facid, slots} = req.body;
-    
-    try {
-        const result = await db.none(`INSERT INTO cd_bookings (memid, facid, starttime, slots)
-                                      VALUES ($1,$2,$3,$4)`,[memid, facid, starttime, slots]);
-        return res.status(201).json({message:'Se agregó correctamente'})
-    } catch (err) {
-        return res.status(500).json({message:'Se produjo un error'})
-    }
-})
-
 module.exports = router;
