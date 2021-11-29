@@ -1,5 +1,5 @@
 const db = require('./database/connection');
-const exercises = require('./routes/exercises');
+const exercises = require('./routes/exercises-aggregates');
 const members = require('./routes/members-qb');
 const facilities = require ('./routes/facilities-qb');
 const bookings = require ('./routes/bookings-qb');
